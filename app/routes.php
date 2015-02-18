@@ -15,3 +15,20 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+Route::get('/signup', function(){
+	// to sign up form
+});
+Route::get('{slug}/{postid?}', function($slug,$postid=null){
+	echo $slug;
+	echo $postid;
+	$postid = (int) $postid;
+	if($postid==null){
+		//route to main view
+	} elseif($postid==0) {
+		//route to admin view
+	} elseif($postid>0){
+		//route to individual post view
+	} else {
+		App::abort(404);
+	}
+})->where('postid', '[0-9]+');

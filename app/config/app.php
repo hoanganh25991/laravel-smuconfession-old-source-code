@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'http://confessing.in/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return array(
 	|
 	*/
 
-	'key' => 'YourSecretKey!!!',
+	'key' => '6qMbz47owuwn16AJP2ad0VUVRURh13mR',
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
@@ -121,6 +121,9 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+		'Way\Generators\GeneratorsServiceProvider',
+		'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
+		'SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider',
 
 	),
 
@@ -188,6 +191,7 @@ return array(
 		'URL'               => 'Illuminate\Support\Facades\URL',
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
+		'Facebook' 			=> 'SammyK\LaravelFacebookSdk\FacebookFacade',
 
 	),
 

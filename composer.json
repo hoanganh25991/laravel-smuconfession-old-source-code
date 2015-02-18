@@ -5,7 +5,11 @@
 	"license": "MIT",
 	"type": "project",
 	"require": {
-		"laravel/framework": "4.2.*"
+		"laravel/framework": "4.2.*",
+		"sammyk/laravel-facebook-sdk": "~1.1"
+	},
+	"require-dev":{
+		"xethron/migrations-generator": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
