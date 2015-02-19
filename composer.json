@@ -6,7 +6,8 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"sammyk/laravel-facebook-sdk": "~1.1"
+		"sammyk/laravel-facebook-sdk": "~1.1",
+		"msurguy/honeypot": "dev-master"
 	},
 	"require-dev":{
 		"xethron/migrations-generator": "dev-master"

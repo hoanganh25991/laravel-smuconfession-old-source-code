@@ -124,6 +124,7 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
 		'SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider',
+		'Msurguy\Honeypot\HoneypotServiceProvider',
 
 	),
 
