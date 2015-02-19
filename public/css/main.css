@@ -95,11 +95,61 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+body {
+    background-color: rgb(233, 234, 237);
+}
 
+.header-image-container {
+    text-align: center;
+    margin-bottom: 1em;
+}
 
+.header-image-container img {
+    width: 100%;
+}
 
+.white-template, .like-box-white {
+    background-color: white;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border: 1px solid;
+    border-color: rgb(229, 230, 233) rgb(223, 224, 228) rgb(208, 209, 213) rgb(223, 224, 228);
+    margin-bottom: 0.5em;
+}
 
+.white-template nav .pager {
+    margin: 0px;
+    font-size: 12px;
+}
 
+.like-box-white {
+    margin-bottom: 1em;
+}
+
+.readmore {
+    border-top: 1px solid #e1e2e3;
+    height: 30px;
+    margin: 10px -12px 0 -12px;
+    padding-top: 8px;
+}
+
+.readmore p{
+    margin-right:2px;
+    font-size: 12px;
+}
+
+#confess-form {
+    background-color: white;
+}
+
+#confessing-in {
+    width: 100%;
+}
+
+#confessions {
+    margin-top: 1em;
+    font-size: 12px;
+}
 
 
 
