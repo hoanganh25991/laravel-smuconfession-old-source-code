@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'fetch' => PDO::FETCH_CLASS,
+	'fetch' => PDO::FETCH_ASSOC,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 			'database'  => 'confessingin',
-			'username'  => 'priest',
-			'password'  => 'Yof5XeJ4rGMm',
+			'username'  => 'root',
+			'password'  => 'root',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

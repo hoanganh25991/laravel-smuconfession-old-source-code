@@ -123,7 +123,6 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
-		'SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider',
 		'Msurguy\Honeypot\HoneypotServiceProvider',
 
 	),
@@ -192,7 +191,6 @@ return array(
 		'URL'               => 'Illuminate\Support\Facades\URL',
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
-		'Facebook' 			=> 'SammyK\LaravelFacebookSdk\FacebookFacade',
 
 	),
 

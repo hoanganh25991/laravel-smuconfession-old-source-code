@@ -6,8 +6,9 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"sammyk/laravel-facebook-sdk": "~1.1",
-		"msurguy/honeypot": "dev-master"
+		"facebook/php-sdk-v4" : "4.0.*",
+		"msurguy/honeypot": "dev-master",
+		"greggilbert/recaptcha": "1.1.*"
 	},
 	"require-dev":{
 		"xethron/migrations-generator": "dev-master"
@@ -20,7 +21,10 @@
 			"app/database/migrations",
 			"app/database/seeds",
 			"app/tests/TestCase.php"
-		]
+		],
+		"psr-4" : {
+	        "Facebook\\":"vendor/facebook/php-sdk-v4/src/Facebook/"
+	    }
 	},
 	"scripts": {
 		"post-install-cmd": [
