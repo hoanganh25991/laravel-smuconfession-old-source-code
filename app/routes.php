@@ -18,5 +18,5 @@ Route::get('/', function()
 Route::get('/signup', function(){
 	// to sign up form
 });
-//Route::get('{slug}/0',); for auth
+Route::controller('{slug}/0', 'AdminController');
 Route::get('{slug}/{postid?}/{pageid?}', 'MainController@decideRoute');

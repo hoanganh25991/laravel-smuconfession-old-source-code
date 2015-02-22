@@ -128,14 +128,17 @@ body {
 
 .readmore {
     border-top: 1px solid #e1e2e3;
-    height: 30px;
     margin: 10px -12px 0 -12px;
     padding-top: 8px;
+    font-size: 12px;
 }
 
 .readmore p{
     margin-right:2px;
-    font-size: 12px;
+}
+
+.contentedit {
+    white-space: pre-wrap;
 }
 
 #confess-form {

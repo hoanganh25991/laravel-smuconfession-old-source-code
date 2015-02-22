@@ -1,11 +1,10 @@
 @extends('master')
 
 @section('title')
-Confessing In {{$slug}}
-@stop
+Confessing In {{$data['meta']['name']}}@stop
 
 @section('meta_app_id')
-148520945306244 @stop
+{{$data['meta']['fbappid']}}@stop
 
 @section('content')
 
@@ -14,7 +13,7 @@ Confessing In {{$slug}}
             <div class="row"> 
             {{ Form::open(array('url' => 'confess.submit', 'method' => 'post', 'id' => 'confess-form')) }}
             <div class="col-xs-12 text-center">
-                {{ Form::label('confessing-in', 'Confessing In '.'smusg'.':')}}
+                {{ Form::label('confessing-in', 'Confess in '.$data['meta']['institution'].':')}}
             </div>
             <div class="col-xs-12"> 
                 {{ Form::textarea('confessing-in')}}
@@ -30,24 +29,21 @@ Confessing In {{$slug}}
     	<h3 class="col-xs-12 col-md-8 col-md-offset-2">Past confessions</h3>
     </div>
     <div class="row" id="confessions">
+    	@foreach($data['approved'] as $approved)
     	<div class="col-xs-12 col-md-8 col-md-offset-2 white-template">
-    	#26811
-==========
-While the confessions lately have been pretty heated, am I the only one here who is more interested in finding places around the area to eat at? So.. Someone, anyone, leave a comment for my ever so hungry tummy! Hehe.
-==========
-#26811
-Confess at: http://confessing.in/smusg/confess
-			<div class="readmore"><p class="text-right">Published: . On Facebook: 0 likes, 0 comments. On site: 0 likes, 0 comments. Read more</p></div>
+    		{{$approved['fbText']}}
+    		<div class="readmore"><p class="text-right"><a href="{{url($data['meta']['slug'].'/'.$approved['confessionid'])}}">Published: {{$approved['approveddate']}}. On Facebook: 0 likes, 0 comments. On site: <fb:comments-count href={{url($data['meta']['slug'].'/'.$approved['confessionid'])}}/></fb:comments-count> comments. Read more</a></p></div>
     	</div>
-    	<div class="col-xs-12 col-md-8 col-md-offset-2 white-template">
-    	#26811
-==========
-While the confessions lately have been pretty heated, am I the only one here who is more interested in finding places around the area to eat at? So.. Someone, anyone, leave a comment for my ever so hungry tummy! Hehe.
-==========
-#26811
-Confess at: http://confessing.in/smusg/confess
-			<div class="readmore"><p class="text-right"><a href="{{url('smusg/1')}}">Published: . On Facebook: 0 likes, 0 comments. On site: 0 likes, <fb:comments-count href={{url('smusg/1')}}/></fb:comments-count> comments. Read more</a></p></div>
-    	</div>
+    	@endforeach
     </div>
-
+    <div class="row"> 
+		<div class="col-xs-12 col-md-8 col-md-offset-2 white-template">
+			<nav>
+				<ul class="pager">
+					@if ($data['meta']['currentpage']==1) <li class="previous disabled"><a href="#"> @else <li class="previous"><a href="{{url($data['meta']['slug'].'/page/'.($data['meta']['currentpage']-1))}}"> @endif <span aria-hidden="true">&larr;</span> Previous</a></li>
+	    			@if ($data['meta']['maxpage']==$data['meta']['currentpage']) <li class="next disabled"><a href="#"> @else <li class="next"><a href="{{url($data['meta']['slug'].'/page/'.($data['meta']['currentpage']+1))}}"> @endif Next <span aria-hidden="true">&rarr;</span></a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
 @stop

@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta property="fb:app_id" content="@yield('meta_app_id')"/>
-
+        @yield('meta_og_tags')
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
 
@@ -50,6 +50,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
         <script src="{{url('js/plugins.js')}}"></script>
         <script src="{{url('js/main.js')}}"></script>
+        @yield('moreJS')
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
