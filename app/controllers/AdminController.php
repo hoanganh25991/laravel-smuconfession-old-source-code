@@ -184,7 +184,13 @@ class AdminController extends BaseController {
 			$user = DB::table($this->tbl_prefix.'_admin')->select('page_access_token')->where('profileId',Session::get('fbid'))->first();
 			if(sizeof($user)>0){
 				if($user['page_access_token'] == $decodeKey[1]) {
-					return true;
+					try{
+						//attempt authorisation
+						$this->fbSession = new FacebookSession($user['page_access_token']);
+						return true;
+					} catch (FacebookRequestException $e){
+						return false;
+					}
 				}
 			}
 		}
