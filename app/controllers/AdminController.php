@@ -24,7 +24,7 @@ class AdminController extends BaseController {
 
 	public function retrievePendingConfessions(){
 		// date('Y-m-d', mktime(0, 0, 0, date("m") , date("d") - 5, date("Y")))
-		$results = DB::select(DB::raw("SELECT * FROM ".$this->tbl_prefix."_confession WHERE `timestamp` > '".date('Y-m-d', mktime(0, 0, 0, date("m") , date("d") - 7, date("Y")))." 00:00:00' AND reject = 0 AND `id` NOT IN (SELECT confessionid FROM `".$this->tbl_prefix."_approved` WHERE `approveddate` > '".date('Y-m-d', mktime(0, 0, 0, date("m") , date("d") - 14, date("Y")))." 00:00:00') ORDER BY `timestamp` ASC"));
+		$results = DB::select(DB::raw("SELECT * FROM ".$this->tbl_prefix."_confession WHERE `timestamp` > '".date('Y-m-d', mktime(0, 0, 0, date("m") , date("d") - 30, date("Y")))." 00:00:00' AND reject = 0 AND `id` NOT IN (SELECT confessionid FROM `".$this->tbl_prefix."_approved` WHERE `approveddate` > '".date('Y-m-d', mktime(0, 0, 0, date("m") , date("d") - 30, date("Y")))." 00:00:00') ORDER BY `timestamp` ASC"));
 		$this->dataContainer['pending'] = $results;
 	}
 
