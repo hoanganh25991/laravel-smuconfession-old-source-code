@@ -45,5 +45,14 @@ class BaseController extends Controller {
 	    return $text;
 	}
 
+	public function retrieveUrl($string){
+	    $regex = '/https?\:\/\/[^\" ]+/i';
+	    preg_match($regex, $string, $matches);
+	    if(empty($matches)){
+	    	return false;
+	    }
+	    return ($matches[0]);
+	}
+
 
 }

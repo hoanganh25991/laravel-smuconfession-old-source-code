@@ -2,6 +2,7 @@
 
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
+use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 
 class AdminController extends BaseController {
@@ -37,8 +38,55 @@ class AdminController extends BaseController {
 		$this->fbSession = FacebookSession::newAppSession();
 	}
 
-	public function postAction(){
-		return json_encode(Input::all());
+	public function postAction($slug){
+		$this->fbInit($slug);
+		if($this->verifyFbAuth()){
+			$id = Input::get('id');
+			$action = Input::get('action');
+			$confession = Input::get('confession');
+			
+			switch ($action) {
+				case 'approve':
+					$this->publishToFacebook($confession, $id);
+					break;
+				
+				case 'decline':
+
+					break;
+				default:
+					# code...
+					return Response::json(array('msg'=>'No such action'), 400);
+					break;
+			}
+		}
+		return Response::json(array('msg'=>'Error in posting'), 400);
+	
+	}
+
+	public function publishToFacebook($text, $id){
+		$check = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('confessionid', $id)->count();
+		if($check > 0){
+			return array(
+				'status' => true, 
+				'msg' => 'Approved by another admin');
+		}
+		$pageid = $this->dataContainer['meta']['fbpageid'];
+		$textToSend = "#".$id.PHP_EOL."==========".PHP_EOL.$text.PHP_EOL."==========".PHP_EOL."#".$id;
+		$textToSend .= ': http://confessing.in/'.$slug.'/'.$id;
+		$textToSend .= PHP_EOL.PHP_EOL."Confess at: http://confessing.in/smusg/confess";
+		// approve in database first, then send to facebook, then update with facebok id.
+		DB::table($this->tbl_prefix.'_approved')->insert(array(
+			'confessionid' => $id,
+			'fbText' => $text,
+			'adminId' => Session::get('fbid')));
+		// then send to facebook, then update with facebook id.
+		$url = $this->retrieveUrl($text);
+		if($url){
+			
+		}
+		try{
+			$response = (new FacebookRequest($this->fbSession));
+		}
 	}
 
 	public function getLogin($slug){
