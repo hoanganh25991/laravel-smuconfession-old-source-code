@@ -7,8 +7,6 @@ use Facebook\FacebookRequestException;
 
 class AdminController extends BaseController {
 
-	protected $fbSession = '';
-	protected $fbApp = array();
 	protected $layout = 'master';
 
 
@@ -28,16 +26,6 @@ class AdminController extends BaseController {
 		$this->dataContainer['pending'] = $results;
 	}
 
-	public function fbInit($slug){
-		$this->retrieveMetaData($slug);
-		$this->fbApp = array(
-			'fbappid' => $this->dataContainer['meta']['fbappid'],
-			'fbappsecret' => $this->dataContainer['meta']['fbappsecret'],
-			'fbpageid' => $this->dataContainer['meta']['fbpageid']);
-		FacebookSession::setDefaultApplication($this->fbApp['fbappid'],$this->fbApp['fbappsecret']);
-		$this->fbSession = FacebookSession::newAppSession();
-	}
-
 	public function postAction($slug){
 		$this->fbInit($slug);
 		if($this->verifyFbAuth()){
@@ -47,14 +35,12 @@ class AdminController extends BaseController {
 			
 			switch ($action) {
 				case 'approve':
-					$this->publishToFacebook($confession, $id);
+					$this->publishToFacebook($confession, $id, $slug);
 					break;
-				
 				case 'decline':
-
+					$this->reject($id);
 					break;
 				default:
-					# code...
 					return Response::json(array('msg'=>'No such action'), 400);
 					break;
 			}
@@ -63,12 +49,12 @@ class AdminController extends BaseController {
 	
 	}
 
-	public function publishToFacebook($text, $id){
+	public function publishToFacebook($text, $id, $slug){
 		$check = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('confessionid', $id)->count();
 		if($check > 0){
-			return array(
+			return Responese::json(array(
 				'status' => true, 
-				'msg' => 'Approved by another admin');
+				'msg' => 'Approved by another admin'), 400);
 		}
 		$pageid = $this->dataContainer['meta']['fbpageid'];
 		$textToSend = "#".$id.PHP_EOL."==========".PHP_EOL.$text.PHP_EOL."==========".PHP_EOL."#".$id;
@@ -81,12 +67,47 @@ class AdminController extends BaseController {
 			'adminId' => Session::get('fbid')));
 		// then send to facebook, then update with facebook id.
 		$url = $this->retrieveUrl($text);
-		if($url){
-			
+		$toSend = array(
+			'message' => $textToSend
+			);
+		if($url == true){
+			//check if $url exists:
+			if($this->urlExist($url) == true){
+				$toSend['link'] = $url;
+			}
 		}
 		try{
-			$response = (new FacebookRequest($this->fbSession));
+			$response = (new FacebookRequest(
+				$this->fbSession,
+				'POST',
+				'/'.$pageid.'/feed',
+				$toSend
+				))->execute()->getGraphObject();
+			$status = (new FacebookRequest(
+				$this->fbSession,
+				'GET',
+				'/'.$response->getProperty('id')
+				))->execute()->getGraphObject()->asArray();
+			$fbLink = $status['actions'][0]['link'];
+			DB::table($this->tbl_prefix.'_approved')->where('confessionid', $id)->update(array(
+				'fbUrl' => $fbLink,
+				'fbid' => $response->getProperty('id')));
+		} catch (FacebookRequestException $ex){
+			return Response::json(array(
+				'status' => false,
+				'code' => $ex->getCode(),
+				'msg' => $ex->getMessage()), 400);
 		}
+		return Response::json(array(
+			'status' => true,
+			'msg' => 'Approved '.$id));
+	}
+
+	public function reject($id){
+		DB::table($this->tbl_prefix.'_confession')->where('id', $id)->update(array(
+			'reject' => Session::get('fbid'),
+			'rejectDate' => gmdate("Y-m-d H:i:s", time())
+			));
 	}
 
 	public function getLogin($slug){

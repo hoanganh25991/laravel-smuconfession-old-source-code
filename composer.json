@@ -6,9 +6,10 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"facebook/php-sdk-v4" : "4.0.*",
+		"facebook/php-sdk-v4" : "4.0.18",
 		"msurguy/honeypot": "dev-master",
-		"greggilbert/recaptcha": "1.1.*"
+		"greggilbert/recaptcha": "1.1.*",
+		"webpatser/laravel-uuid": "1.*"
 	},
 	"require-dev":{
 		"xethron/migrations-generator": "dev-master"

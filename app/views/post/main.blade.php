@@ -11,17 +11,36 @@ Confessing In {{$data['meta']['name']}}@stop
     <div class="row">
         <div class="col-xs-12 col-md-8 col-md-offset-2 white-template">
             <div class="row"> 
-            {{ Form::open(array('url' => 'confess.submit', 'method' => 'post', 'id' => 'confess-form')) }}
-            <div class="col-xs-12 text-center">
-                {{ Form::label('confessing-in', 'Confess in '.$data['meta']['institution'].':')}}
+            {{ Form::open(array('url' => $data['meta']['slug'].'/confess', 'method' => 'post', 'id' => 'confess-form')) }}
+                {{ Form::honeypot('confessor', 'confess_time') }}
+                <div class="col-xs-12 text-center">
+                    {{ Form::label('confessing-in', 'Confess in '.$data['meta']['institution'].':')}}
+                </div>
+                <div class="col-xs-12"> 
+                    {{ Form::textarea('confessing-in', Input::old('confessing-in'))}}
+                </div>
             </div>
-            <div class="col-xs-12"> 
-                {{ Form::textarea('confessing-in')}}
-            </div>
-            <div class="col-xs-12 text-center"> 
-                {{ Form::submit('Confess!', array('id'=>'btn-confess',))}}
-            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 text-right">
+                    {{ Form::captcha() }}
+                </div>
+                <div class="col-xs-12 col-md-6"> 
+                    {{ Form::submit('Confess!', array('id'=>'btn-confess',))}}
+                </div>
             {{ Form::close() }}
+            </div>
+            <div class="row">
+                @if ($errors->has())
+                <div class="col-xs-12 bg-warning">
+                    @foreach ($errors->all() as $error)
+                    <p> {{ $error }}</p>
+                    @endforeach
+                </div>
+                @elseif (isset($success))
+                <div class="col-xs-12 bg-success"> 
+                    <p> {{$success}} </p>
+                </div>
+                @endif
             </div>
         </div>
     </div>

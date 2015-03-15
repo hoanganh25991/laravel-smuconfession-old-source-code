@@ -58,14 +58,17 @@ class MainController extends BaseController {
 
 	public function retrieveSingleDetails($postid){
 		$results = DB::table($this->tbl_prefix.'_approved')->where('confessionid',$postid)->first();
+		if($results['isDeleted'] == 1){
+			App::abort(404);
+		}
 		if(sizeof($results)!=0){
 			$this->dataContainer['single'] = $results;
 			$admin = DB::table($this->tbl_prefix.'_admin')->select('nick')->where('profileId',$results['adminid'])->first();
 			$this->dataContainer['single']['adminid'] = $admin['nick'];
 			$submit = DB::table($this->tbl_prefix.'_confession')->select('timestamp')->where('id',$postid)->first();
 			$this->dataContainer['single']['submitdate'] = $submit['timestamp'];
-			$previous = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('approveddate', '<', $results['approveddate'])->orderby('approveddate', 'desc')->take(1)->first();
-			$next = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('approveddate', '>', $results['approveddate'])->orderby('approveddate','asc')->take(1)->first();
+			$previous = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('approveddate', '<', $results['approveddate'])->whereNull('isDeleted')->orderby('approveddate', 'desc')->take(1)->first();
+			$next = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('approveddate', '>', $results['approveddate'])->whereNull('isDeleted')->orderby('approveddate','asc')->take(1)->first();
 			$this->dataContainer['single']['previous'] = $previous['confessionid'];
 			$this->dataContainer['single']['next'] = $next['confessionid'];
 		} else {

@@ -11,7 +11,8 @@ Confessing In {{$data['meta']['name']}}@stop
 @stop
 
 @section('content')
-<div class="row">
+    <!--
+    <div class="row">
         <div class="col-xs-12 col-md-8 col-md-offset-2 white-template">
             <div class="row"> 
             {{ Form::open(array('url' => 'confess.submit', 'method' => 'post', 'id' => 'confess-form')) }}
@@ -28,11 +29,7 @@ Confessing In {{$data['meta']['name']}}@stop
             </div>
         </div>
     </div>
-    {{link_to($data['meta']['slug']."/0/login",'Login')}}<br/>
-    @if (Session::has('fbid'))
-    {{ Session::get('fbid')}}<br/>
-    {{ Session::get('fbAccessKey')}}
-    @endif
+    -->
     <div class="row" id="confessions-header">
     	<h3 class="col-xs-12 col-md-8 col-md-offset-2">Confessions</h3>
     </div>

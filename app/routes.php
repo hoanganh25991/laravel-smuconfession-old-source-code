@@ -19,4 +19,5 @@ Route::get('/signup', function(){
 	// to sign up form
 });
 Route::controller('{slug}/0', 'AdminController');
+Route::resource('{slug}/confess', 'ConfessController', array('only' => array('store')));
 Route::get('{slug}/{postid?}/{pageid?}', 'MainController@decideRoute');

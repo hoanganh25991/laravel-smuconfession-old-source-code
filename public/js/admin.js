@@ -12,5 +12,7 @@ $('.action').click(function(){
 		dataType: 'json',
 	}).done(function(data){
 		console.log(data);
+	}).error(function(data){
+		console.log(data);
 	});
 });
