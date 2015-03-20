@@ -10,8 +10,8 @@ Confessing In {{$data['meta']['name']}}@stop
 
     <div class="row">
         <div class="col-xs-12 col-md-8 col-md-offset-2 white-template">
-            <div class="row"> 
             {{ Form::open(array('url' => $data['meta']['slug'].'/confess', 'method' => 'post', 'id' => 'confess-form')) }}
+            <div class="row"> 
                 {{ Form::honeypot('confessor', 'confess_time') }}
                 <div class="col-xs-12 text-center">
                     {{ Form::label('confessing-in', 'Confess in '.$data['meta']['institution'].':')}}
@@ -27,8 +27,8 @@ Confessing In {{$data['meta']['name']}}@stop
                 <div class="col-xs-12 col-md-6"> 
                     {{ Form::submit('Confess!', array('id'=>'btn-confess',))}}
                 </div>
-            {{ Form::close() }}
             </div>
+            {{ Form::close() }}
             <div class="row">
                 @if ($errors->has())
                 <div class="col-xs-12 bg-warning">

@@ -36,15 +36,20 @@ class AdminController extends BaseController {
 			switch ($action) {
 				case 'approve':
 					$this->publishToFacebook($confession, $id, $slug);
+					return Response::json(array('msg'=>'Posted'));
 					break;
 				case 'decline':
 					$this->reject($id);
+					return Response::json(array('msg'=>'Rejected'));
 					break;
 				default:
 					return Response::json(array('msg'=>'No such action'), 400);
 					break;
 			}
+		} else {
+			return Response::json(array('msg'=>"Relogin required."), 400);
 		}
+		//$slug, $postid=null, $adminid=null, $batch=false
 		return Response::json(array('msg'=>'Error in posting'), 400);
 	
 	}

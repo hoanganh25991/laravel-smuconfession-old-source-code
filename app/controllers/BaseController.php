@@ -123,7 +123,6 @@ class BaseController extends Controller {
 
 		required: post id, slug. optional: adminid
 		*/
-
 		if($batch==false && $postid!=null){
 			$post = DB::table($this->tbl_prefix.'_approved')->select('approveddate','checkeddate')->where('confessionId', $postid)->first();
 			$diff1 = time() - strtotime($post['approveddate']);
@@ -132,13 +131,13 @@ class BaseController extends Controller {
 				$postsToCheck[] = $postid;
 			}
 		} elseif($batch) {
-			$post = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('checkeddate', '>', date('Y-m-d H:i:s', strtotime(time()-86400)))->whereNull('checkeddate')->get();
+			$post = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('checkeddate', '<', date('Y-m-d H:i:s', strtotime(time()-86400)))->orWhereNull('checkeddate')->limit(50)->get();
 			foreach ($post as $key => $value) {
-				$postsToCheck[] = $value;
+				$postsToCheck[] = $value['confessionid'];
 			}
 		}
 		if(count($postsToCheck)==0){
-			return false;
+			return 'No posts!';
 		}
 		$this->fbInit($slug);
 		$access_token = null;
@@ -155,10 +154,10 @@ class BaseController extends Controller {
 			$this->fbSession->validate();
 		} catch (FacebookRequestException $ex) {
 			// Session not valid, Graph API returned an exception with the reason.
-			return false;
+			return 'No valid session';
 		} catch (\Exception $ex) {
 			// Graph API returned info, but it may mismatch the current app or have expired.
-			return false;
+			return 'some other graph api error';
 		}
 
 		foreach ($postsToCheck as $key => $value) {
@@ -166,40 +165,42 @@ class BaseController extends Controller {
 			$fbid = DB::table($this->tbl_prefix.'_approved')->select('fbid', 'isDeleted')->where('confessionId', $value)->first();
 			$isDeleted = $fbid['isDeleted'];
 			$fbid = $fbid['fbid'];
-
 			if($isDeleted != null || $isDeleted != 1){
-				return false;
-			}
-			//get likes and comments
-			try{
-				echo $fbid;
-				$request = new FacebookRequest(
-					$this->fbSession,
-					'GET',
-					'/'.$fbid.'/likes?summary=true');
-				$response = $request->execute();
-				$likes = $response->getGraphObject()->asArray();
-				$likesCount = $likes['summary']->total_count;
+				try{
+					echo $fbid;
+					//this is a redundant but neccessary call to check if the post is deleted. just because likes and comments edges may not throw exception. bah.
+					$request = new FacebookRequest(
+						$this->fbSession,
+						'GET',
+						'/'.$fbid);
+					$response = $request->execute();
+					$request = new FacebookRequest(
+						$this->fbSession,
+						'GET',
+						'/'.$fbid.'/likes?summary=true');
+					$response = $request->execute();
+					$likes = $response->getGraphObject()->asArray();
+					$likesCount = $likes['summary']->total_count;
 
-				$request = new FacebookRequest(
-					$this->fbSession,
-					'GET',
-					'/'.$fbid.'/comments?summary=true');
-				$response = $request->execute();
-				$comments = $response->getGraphObject()->asArray();
-				$commentsCount = $comments['summary']->total_count
-				return Response::Json($likesCount);
-				DB::table($this->tbl_prefix.'_approved')->where('confessionId', $value)->update(array(
-					'fbLikeCount'=>$likesCount,
-					'fbCommentCount'=>$commentsCount,
-					'checkeddate'=>date('Y-m-d H:i:s')));
-			} catch (FacebookRequestException $e){
-				// most likely to be deleted. remove from 
-				DB::table($this->tbl_prefix.'_approved')->where('confessionId', $value)->update(array(
-					'isDeleted' => 1,
-					'checkeddate'=>date('Y-m-d H:i:s')));
-			}
+					$request = new FacebookRequest(
+						$this->fbSession,
+						'GET',
+						'/'.$fbid.'/comments?summary=true');
+					$response = $request->execute();
+					$comments = $response->getGraphObject()->asArray();
+					$commentsCount = $comments['summary']->total_count;
+					$update = DB::table($this->tbl_prefix.'_approved')->where('confessionId', $value)->update(array(
+						'fbLikeCount'=>$likesCount,
+						'fbCommentCount'=>$commentsCount,
+						'checkeddate'=>date('Y-m-d H:i:s')));
+				} catch (FacebookRequestException $e){
+					// most likely to be deleted. remove from 
+					$update = DB::table($this->tbl_prefix.'_approved')->where('confessionId', $value)->update(array(
+						'isDeleted' => 1,
+						'checkeddate'=>date('Y-m-d H:i:s')));
+				}
+			}			
 		}
-		return true;
+		return 'done updating, i think';
 	}
 }

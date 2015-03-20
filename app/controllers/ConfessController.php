@@ -13,7 +13,7 @@ class ConfessController extends \BaseController {
 			'confessor' => 'honeypot',
 			'confess_time' => 'required|honeytime:5',
 			'confessing-in' => 'required|existing',
-			'g-recaptcha-response' => 'recaptcha',
+			'g-recaptcha-response' => 'required|recaptcha',
 			);
 		//custom Validator rule to check if the confession is a repeated post.
 		Validator::extend('existing', function($attribute, $value, $parameters){
@@ -25,7 +25,6 @@ class ConfessController extends \BaseController {
 		});
 		$validator = Validator::make(Input::get(), $rules);
 		if($validator->fails()){
-			//Session::flash('confessing-in', Input::get('confessing-in'));
 			return Redirect::to($slug)
 				->withErrors($validator)
 				->withInput(Input::get());
