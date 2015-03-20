@@ -167,7 +167,6 @@ class BaseController extends Controller {
 			$fbid = $fbid['fbid'];
 			if($isDeleted != null || $isDeleted != 1){
 				try{
-					echo $fbid;
 					//this is a redundant but neccessary call to check if the post is deleted. just because likes and comments edges may not throw exception. bah.
 					$request = new FacebookRequest(
 						$this->fbSession,
