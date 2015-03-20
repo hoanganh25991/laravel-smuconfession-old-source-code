@@ -32,7 +32,7 @@ class AdminController extends BaseController {
 			$id = Input::get('id');
 			$action = Input::get('action');
 			$confession = Input::get('confession');
-			
+			$this->updatePost($slug, null, Session::get('fbid'), true);
 			switch ($action) {
 				case 'approve':
 					$this->publishToFacebook($confession, $id, $slug);
@@ -57,7 +57,7 @@ class AdminController extends BaseController {
 	public function publishToFacebook($text, $id, $slug){
 		$check = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('confessionid', $id)->count();
 		if($check > 0){
-			return Responese::json(array(
+			return Response::json(array(
 				'status' => true, 
 				'msg' => 'Approved by another admin'), 400);
 		}
@@ -68,7 +68,7 @@ class AdminController extends BaseController {
 		// approve in database first, then send to facebook, then update with facebok id.
 		DB::table($this->tbl_prefix.'_approved')->insert(array(
 			'confessionid' => $id,
-			'fbText' => $text,
+			'fbText' => $textToSend,
 			'adminId' => Session::get('fbid')));
 		// then send to facebook, then update with facebook id.
 		$url = $this->retrieveUrl($text);
