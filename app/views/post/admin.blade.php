@@ -39,7 +39,7 @@ Confessing In {{$data['meta']['name']}}@stop
 			<div contenteditable class="contentedit" id="content-{{$pending['id']}}">{{$pending['confession']}}</div>
 			<div class="readmore row">
 				<div class="col-xs-12 col-md-8">#{{$pending['id']}} {{$pending['timestamp']}} {{$pending['ipaddress']}}</div>
-				<div class="col-xs-12 col-md-4"><p class='text-center'><a href="#" class="action" data-action="approve" data-id="{{$pending['id']}}">Approve</a> | <a href="#" class="action" data-action="decline" data-id="{{$pending['id']}}">Decline</a></p></div>
+				<div class="col-xs-12 col-md-4"><p class='text-center'><a class="action" data-action="approve" data-id="{{$pending['id']}}">Approve</a> | <a class="action" data-action="decline" data-id="{{$pending['id']}}">Decline</a></p></div>
 			</div>
 		</div>
 		@endforeach

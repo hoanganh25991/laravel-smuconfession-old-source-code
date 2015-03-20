@@ -1,5 +1,6 @@
+var actioned_id = '';
 $('.action').click(function(){
-	console.log($(this).data('id'));
+	actioned_id = $(this).data('id');
 	console.log($(this).data('action'));
 	$.ajax({
 		type: 'POST',
@@ -11,7 +12,8 @@ $('.action').click(function(){
 		},
 		dataType: 'json',
 	}).done(function(data){
-		console.log(data);
+		$('#box-'+$actioned_id).remove();
+		actioned_id = '';
 	}).error(function(data){
 		console.log(data);
 	});
