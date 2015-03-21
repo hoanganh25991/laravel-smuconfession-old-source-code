@@ -51,7 +51,7 @@ class BaseController extends Controller {
 
 	public function setCookie(){
 		if(Cookie::get('CI_UID') !== false) {
-			Cookie::queue('CI_UID', Uuid::generate(5, 'ci_confessing', 'da39a3ee-5e6b-4b0d-3255-bfef95601890'), 2628000);
+			Cookie::queue('CI_UID', Uuid::generate(5, Request::getClientIp().time() , 'da39a3ee-5e6b-4b0d-3255-bfef95601890'), 2628000);
 		}
 	}
 
