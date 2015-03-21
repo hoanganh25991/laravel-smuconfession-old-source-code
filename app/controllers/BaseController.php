@@ -130,12 +130,7 @@ class BaseController extends Controller {
 		required: post id, slug. optional: adminid
 		*/
 		if($batch==false && $postid!=null){
-			$post = DB::table($this->tbl_prefix.'_approved')->select('approveddate','checkeddate')->where('confessionId', $postid)->first();
-			$diff1 = time() - strtotime($post['approveddate']);
-			$diff2 = time() - strtotime($post['checkeddate'] ? $post['checkeddate'] : -1);
-			if(($diff1 < 259200 && $diff2 > 1800) || ($diff1 < 604800 && $diff2 > 7200) || ($diff1 < 2592000 && $diff2 > 21600) || ($diff1 < 7776000 && $diff2 > 43200) || ($diff1 < 15552000 && $diff2 > 86400) || ($diff1 < 15778463 && $diff2 > 259200) || ($diff1 < 31104000 && $diff2 > 604800) || ($diff1 >= 31104000 && $diff2 >= 1800)){
-				$postsToCheck[] = $postid;
-			}
+			$postsToCheck[] = $postid;
 		} elseif($batch) {
 			$post = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('checkeddate', '<', date('Y-m-d H:i:s', strtotime(time()-86400)))->orWhereNull('checkeddate')->limit(50)->get();
 			foreach ($post as $key => $value) {
@@ -194,13 +189,13 @@ class BaseController extends Controller {
 					$response = $request->execute();
 					$comments = $response->getGraphObject()->asArray();
 					$commentsCount = $comments['summary']->total_count;
-					$update = DB::table($this->tbl_prefix.'_approved')->where('confessionId', $value)->update(array(
+					$update = DB::table($this->tbl_prefix.'_approved')->where('confessionid', $value)->update(array(
 						'fbLikeCount'=>$likesCount,
 						'fbCommentCount'=>$commentsCount,
 						'checkeddate'=>date('Y-m-d H:i:s')));
 				} catch (FacebookRequestException $e){
 					// most likely to be deleted. remove from 
-					$update = DB::table($this->tbl_prefix.'_approved')->where('confessionId', $value)->update(array(
+					$update = DB::table($this->tbl_prefix.'_approved')->where('confessionid', $value)->update(array(
 						'isDeleted' => 1,
 						'checkeddate'=>date('Y-m-d H:i:s')));
 				}
