@@ -12,7 +12,7 @@ $('.action').click(function(){
 		},
 		dataType: 'json',
 	}).done(function(data){
-		$('#box-'+$actioned_id).remove();
+		$('#box-'+actioned_id).remove();
 		actioned_id = '';
 	}).error(function(data){
 		console.log(data);
