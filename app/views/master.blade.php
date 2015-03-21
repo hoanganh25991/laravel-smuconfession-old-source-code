@@ -35,7 +35,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-8 col-md-offset-2 header-image-container">
-                    <img class="header-image" src="https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xap1/v/t1.0-9/1375823_522897604464748_374998292_n.png?oh=4d877b5139c22d7b698b231add1edb9e&oe=558BA0DA&__gda__=1435884377_e1d393184d4c765b685d7847f52d0f44" />
+                    <a href="{{url($data['meta']['slug'])}}">
+                        <img class="header-image" src="$data['meta']['header_img']" />
+                    </a>
                 </div>
             </div>
             <div class="row">
