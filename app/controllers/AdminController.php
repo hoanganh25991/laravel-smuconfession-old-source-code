@@ -93,7 +93,7 @@ class AdminController extends BaseController {
 				'GET',
 				'/'.$response->getProperty('id')
 				))->execute()->getGraphObject()->asArray();
-			$fbLink = $status['actions'][0]['link'];
+			$fbLink = $status['actions'][0]->link;
 			DB::table($this->tbl_prefix.'_approved')->where('confessionid', $id)->update(array(
 				'fbUrl' => $fbLink,
 				'fbid' => $response->getProperty('id')));
