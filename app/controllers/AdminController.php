@@ -132,7 +132,7 @@ class AdminController extends BaseController {
 			$rescope = array();
 
 			while($rescope_count < 2) {
-				$request = new FacebookRequest($this->fbSession, 'GET', '/me/permissions')->execute();
+				$request = (new FacebookRequest($this->fbSession, 'GET', '/me/permissions'))->execute();
 				$response = $request->getGraphObject()->asArray();
 				foreach ($response['data'] as $key => $value) {
 					if($value->status == 'declined'){
