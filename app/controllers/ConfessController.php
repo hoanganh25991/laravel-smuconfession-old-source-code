@@ -8,7 +8,7 @@ class ConfessController extends \BaseController {
      */
 
     public function index($slug){
-        return Redirect::to($slug);
+        return Redirect::route($slug);
     }
 
 	/**
