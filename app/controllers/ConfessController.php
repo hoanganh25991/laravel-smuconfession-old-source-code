@@ -47,7 +47,7 @@ class ConfessController extends \BaseController {
 			$user_agent = $_SERVER['HTTP_USER_AGENT'];
 			$result = DB::table('useragentstring')->select('uaid')->where('string', $user_agent);
 			if($result->count()>0){
-				$receive['useragentid'] = $result->first()->uaid;
+				$receive['useragentid'] = $result->first()['uaid'];
 			} else {
 				$uaid = DB::table('useragentstring')->insertGetId(array('string'=> $user_agent));
 				$receive['useragentid'] = $uaid;
