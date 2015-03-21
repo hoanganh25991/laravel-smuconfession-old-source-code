@@ -64,7 +64,7 @@ class AdminController extends BaseController {
 		$pageid = $this->dataContainer['meta']['fbpageid'];
 		$textToSend = "#".$id.PHP_EOL."==========".PHP_EOL.$text.PHP_EOL."==========".PHP_EOL."#".$id;
 		$textToSend .= ': http://confessing.in/'.$slug.'/'.$id;
-		$textToSend .= PHP_EOL.PHP_EOL."Confess at: http://confessing.in/smusg/confess";
+		$textToSend .= PHP_EOL.PHP_EOL."Confess at: http://confessing.in/".$slug."/";
 		// approve in database first, then send to facebook, then update with facebok id.
 		DB::table($this->tbl_prefix.'_approved')->insert(array(
 			'confessionid' => $id,

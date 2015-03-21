@@ -13,6 +13,12 @@ Confessing In {{$data['meta']['name']}}@stop
 <meta property="og_url" content="{{Request::url()}}" />
 @stop
 
+@section('header_link')
+{{url($data['meta']['slug'])}}@stop
+
+@section('header_img')
+{{$data['meta']['header_img']}}@stop
+
 @section('content')
 <div class="row">
 	<div class="col-xs-12 col-md-8 col-md-offset-2 white-template">

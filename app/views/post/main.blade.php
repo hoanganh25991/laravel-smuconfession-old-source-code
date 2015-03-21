@@ -6,6 +6,12 @@ Confessing In {{$data['meta']['name']}}@stop
 @section('meta_app_id')
 {{$data['meta']['fbappid']}}@stop
 
+@section('meta_og_tags')
+<meta property="og_title" content="{{$data['meta']['name']}}"/>
+<meta property="og_site_name" content="Confessing In Network" />
+<meta property="og_url" content="{{Request::url()}}" />
+@stop
+
 @section('header_link')
 {{url($data['meta']['slug'])}}@stop
 

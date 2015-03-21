@@ -2,6 +2,15 @@
 
 class ConfessController extends \BaseController {
 
+    /**
+     * Redirect get requests to slug
+     * 
+     */
+
+    public function index($slug){
+        return Redirect::to($slug);
+    }
+
 	/**
 	 * Store a newly created resource in storage.
 	 *

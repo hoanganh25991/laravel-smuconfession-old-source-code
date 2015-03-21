@@ -10,6 +10,12 @@ Confessing In {{$data['meta']['name']}}@stop
 <script src="{{url('js/admin.js')}}"></script>
 @stop
 
+@section('header_link')
+{{url($data['meta']['slug'])}}@stop
+
+@section('header_img')
+{{$data['meta']['header_img']}}@stop
+
 @section('content')
     <!--
     <div class="row">
