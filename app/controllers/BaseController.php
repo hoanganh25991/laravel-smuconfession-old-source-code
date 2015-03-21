@@ -50,7 +50,7 @@ class BaseController extends Controller {
 	}
 
 	public function setCookie(){
-		if(Cookie::get('CI_UID') !== false) {
+		if(Cookie::get('CI_UID') !== false || Cookie::get('CI_UID' == 'de65d640-f3cb-5bab-bd88-c06d0e908a2c')) {
 			$characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
 			$string = '';
 			for ($i = 0; $i < 20 ; $i++) {
