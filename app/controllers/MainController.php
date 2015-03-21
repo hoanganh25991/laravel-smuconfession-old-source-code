@@ -29,6 +29,7 @@ class MainController extends BaseController {
 
 	public function showIndividualPost($slug,$postid){
 		// load individual posts.	
+		$this->updatePost($slug, $postid, null, false);
 		$this->retrieveSingleDetails($postid);
 		$this->layout->content = View::make('post/single')->with('data', $this->dataContainer);
 	}

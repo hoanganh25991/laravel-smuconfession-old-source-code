@@ -127,9 +127,34 @@ class AdminController extends BaseController {
 		$helper = new LaravelFacebookRedirectLoginHelper(url($slug.'/0/login-fb-callback'));
 		$this->fbSession = $helper->getSessionFromRedirect();
 		try {
+			//check for permissions
+			$rescope_count = 0;
+			$rescope = new array();
+
+			while($rescope_count < 2) {
+				$request = new FacebookRequest($this->fbSession, 'GET', '/me/permissions')->execute();
+				$response = $request->getGraphObject()->asArray();
+				foreach ($response['data'] as $key => $value) {
+					if($value->status == 'declined'){
+						$rescope[] = $value->permision;
+					}
+				}
+
+				if(sizeof($rescope)>0&&$rescope_count==0){
+					$this->fbSession = $helper->getReRequestUrl($rescope);
+					$rescope = new array();
+				}
+				++$rescope_count;
+			}
+
+			if(sizeof($rescope)>0){
+				return Redirect::to(url($slug));
+			}
+
 			//get extended Token
 			$this->fbSession = $this->fbSession->getLongLivedSession($this->fbApp['fbappid'], $this->fbApp['fbappsecret']);
 			$userToken = $this->fbSession->getToken();
+
 			//get page Token
 			$pageToken = '';
 			$accountsResponse = (new FacebookRequest($this->fbSession, 'GET', '/me/accounts'))->execute()->getGraphObject()->asArray();
