@@ -168,7 +168,7 @@ class BaseController extends Controller {
 
 		foreach ($postsToCheck as $key => $value) {
 			//get facebook id from postid
-			$fbid = DB::table($this->tbl_prefix.'_approved')->select('fbid', 'isDeleted')->where('confessionId', $value)->first();
+			$fbid = DB::table($this->tbl_prefix.'_approved')->select('fbid', 'isDeleted')->where('confessionid', $value)->first();
 			$isDeleted = $fbid['isDeleted'];
 			$fbid = $fbid['fbid'];
 			if($isDeleted != null || $isDeleted != 1){
