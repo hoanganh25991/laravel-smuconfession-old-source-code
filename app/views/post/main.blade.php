@@ -6,6 +6,12 @@ Confessing In {{$data['meta']['name']}}@stop
 @section('meta_app_id')
 {{$data['meta']['fbappid']}}@stop
 
+@section('header_link')
+{{url($data['meta']['slug'])}}@stop
+
+@section('header_img')
+{{$data['meta']['header_img']}}@stop
+
 @section('content')
 
     <div class="row">

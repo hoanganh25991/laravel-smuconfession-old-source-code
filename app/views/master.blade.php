@@ -35,8 +35,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-8 col-md-offset-2 header-image-container">
-                    <a href="{{url($data['meta']['slug'])}}">
-                        <img class="header-image" src="$data['meta']['header_img']" />
+                    <a href="@yield('header_link')">
+                        <img class="header-image" src="@yield('header_img')" />
                     </a>
                 </div>
             </div>
