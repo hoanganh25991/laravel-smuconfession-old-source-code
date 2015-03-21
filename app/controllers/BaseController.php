@@ -51,7 +51,13 @@ class BaseController extends Controller {
 
 	public function setCookie(){
 		if(Cookie::get('CI_UID') !== false) {
-			Cookie::queue('CI_UID', Uuid::generate(5, Request::getClientIp().time() , 'da39a3ee-5e6b-4b0d-3255-bfef95601890'), 2628000);
+			$characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+			$string = '';
+			for ($i = 0; $i < 20 ; $i++) {
+				$string .= $characters[rand(0, strlen($characters) - 1)];
+			}
+			$string .= time();
+			Cookie::queue('CI_UID', Uuid::generate(5, $string , 'da39a3ee-5e6b-4b0d-3255-bfef95601890'), 2628000);
 		}
 	}
 
