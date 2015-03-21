@@ -129,7 +129,7 @@ class AdminController extends BaseController {
 		try {
 			//check for permissions
 			$rescope_count = 0;
-			$rescope = new array();
+			$rescope = array();
 
 			while($rescope_count < 2) {
 				$request = new FacebookRequest($this->fbSession, 'GET', '/me/permissions')->execute();
@@ -142,7 +142,7 @@ class AdminController extends BaseController {
 
 				if(sizeof($rescope)>0&&$rescope_count==0){
 					$this->fbSession = $helper->getReRequestUrl($rescope);
-					$rescope = new array();
+					$rescope = array();
 				}
 				++$rescope_count;
 			}
