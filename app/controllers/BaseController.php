@@ -135,7 +135,7 @@ class BaseController extends Controller {
 				->where('confessionid',$postid)
 				->where(function($query){
 					$query
-						->where('checkeddate', '<', date('Y-m-d H:i:s', strtotime(time()-21600)))
+						->where('checkeddate', '<', date('Y-m-d H:i:s', strtotime(time()-10800)))
 						->orWhereNull('checkeddate');
 				})->count();
 			if($count>0){
