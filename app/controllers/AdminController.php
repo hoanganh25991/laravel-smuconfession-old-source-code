@@ -136,7 +136,7 @@ class AdminController extends BaseController {
 				$response = $request->getGraphObject()->asArray();
 				foreach ($response['data'] as $key => $value) {
 					if($value->status == 'declined'){
-						$rescope[] = $value->permision;
+						$rescope[] = $value->permission;
 					}
 				}
 

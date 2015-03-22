@@ -142,13 +142,19 @@ class BaseController extends Controller {
 				$postsToCheck[] = $postid;
 			}
 		} elseif($batch) {
-			$post = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('checkeddate', '<', date('Y-m-d H:i:s', strtotime(time()-86400)))->orWhereNull('checkeddate')->limit(50)->get();
+			$post = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('checkeddate', '<', date('Y-m-d H:i:s', strtotime(time()-86400)))->orWhereNull('checkeddate')->orderBy('approveddate', 'desc')->limit(30)->get();
+			foreach ($post as $key => $value) {
+				$postsToCheck[] = $value['confessionid'];
+			}
+			$post = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('checkeddate', '<', date('Y-m-d H:i:s', strtotime(time()-10800)))->orderBy('approveddate', 'desc')->limit(20)->get();
 			foreach ($post as $key => $value) {
 				$postsToCheck[] = $value['confessionid'];
 			}
 		}
 		if(count($postsToCheck)==0){
 			return 'No posts!';
+		} else {
+			$postsToCheck = array_unique($postsToCheck);
 		}
 		$this->fbInit($slug);
 		$access_token = null;
