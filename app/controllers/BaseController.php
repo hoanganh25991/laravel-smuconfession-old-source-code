@@ -130,7 +130,17 @@ class BaseController extends Controller {
 		required: post id, slug. optional: adminid
 		*/
 		if($batch==false && $postid!=null){
-			$postsToCheck[] = $postid;
+			$count = DB::table($this->tbl_prefix.'_approved')
+				->select('confessionid')
+				->where('confessionid',$postid)
+				->where(function($query){
+					$query
+						->where('checkeddate', '<', date('Y-m-d H:i:s', strtotime(time()-21600)))
+						->orWhereNull('checkeddate')
+				})->count();
+			if($count>0){
+				$postsToCheck[] = $postid;
+			}
 		} elseif($batch) {
 			$post = DB::table($this->tbl_prefix.'_approved')->select('confessionid')->where('checkeddate', '<', date('Y-m-d H:i:s', strtotime(time()-86400)))->orWhereNull('checkeddate')->limit(50)->get();
 			foreach ($post as $key => $value) {

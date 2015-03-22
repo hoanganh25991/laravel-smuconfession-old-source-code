@@ -50,7 +50,7 @@ class MainController extends BaseController {
 			$limit = $this->limit;
 		}
 		$start = $limit*($pageid-1);
-		$results = DB::select(DB::raw("SELECT confessionid, replace(fbText, '\n', '<br>') as fbText, fbUrl, fbid, approveddate FROM ".$this->tbl_prefix.'_approved'." WHERE isDeleted IS NULL ORDER BY approveddate DESC limit ".$start.",".$limit));
+		$results = DB::select(DB::raw("SELECT confessionid, replace(fbText, '\n', '<br>') as fbText, fbUrl, fbid, approveddate, fbLikeCount, fbCommentCount FROM ".$this->tbl_prefix.'_approved'." WHERE isDeleted IS NULL ORDER BY approveddate DESC limit ".$start.",".$limit));
 		foreach ($results as $key => $value) {
 			$results[$key]['fbText'] = $this->truncate($results[$key]['fbText']);
 		}

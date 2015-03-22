@@ -63,7 +63,7 @@ Confessing In {{$data['meta']['name']}}@stop
     	@foreach($data['approved'] as $approved)
     	<div class="col-xs-12 col-md-8 col-md-offset-2 white-template">
     		{{$approved['fbText']}}
-    		<div class="readmore"><p class="text-right"><a href="{{url($data['meta']['slug'].'/'.$approved['confessionid'])}}">Published: {{$approved['approveddate']}}. On Facebook: 0 likes, 0 comments. On site: <fb:comments-count href={{url($data['meta']['slug'].'/'.$approved['confessionid'])}}/></fb:comments-count> comments. Read more</a></p></div>
+    		<div class="readmore"><p class="text-right"><a href="{{url($data['meta']['slug'].'/'.$approved['confessionid'])}}">Published: {{$approved['approveddate']}}. On Facebook: {{$approved['fbLikeCount']}} likes, {{$approved['fbCommentCount']}} comments. On site: <fb:comments-count href={{url($data['meta']['slug'].'/'.$approved['confessionid'])}}/></fb:comments-count> comments. Read more</a></p></div>
     	</div>
     	@endforeach
     </div>
