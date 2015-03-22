@@ -136,7 +136,7 @@ class BaseController extends Controller {
 				->where(function($query){
 					$query
 						->where('checkeddate', '<', date('Y-m-d H:i:s', strtotime(time()-21600)))
-						->orWhereNull('checkeddate')
+						->orWhereNull('checkeddate');
 				})->count();
 			if($count>0){
 				$postsToCheck[] = $postid;
