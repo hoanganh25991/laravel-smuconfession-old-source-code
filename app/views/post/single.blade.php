@@ -24,9 +24,7 @@ Confessing In {{$data['meta']['name']}}@stop
 @section('content')
 <div class="row">
 	<div class="col-xs-12 col-md-8 col-md-offset-2 white-template">
-    	<div class="posted">
-    		{{$data['single']['fbText']}}
-    	</div>
+    	<div class="posted">{{$data['single']['fbText']}}</div>
 		<div class="readmore">
 			<p>Submitted: <span id="submitted-date">{{$data['single']['submitdate']}}</span> | Published: <span id="published-date">{{$data['single']['approveddate']}}</span> | Approved by: <span id="approved-by">{{$data['single']['adminid']}}</span></p>
 		</div>
