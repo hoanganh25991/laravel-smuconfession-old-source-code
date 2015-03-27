@@ -7,9 +7,10 @@ Confessing In {{$data['meta']['name']}}@stop
 {{$data['meta']['fbappid']}}@stop
 
 @section('meta_og_tags')
-<meta property="og_title" content="{{$data['meta']['name']}}"/>
-<meta property="og_site_name" content="Confessing In Network" />
-<meta property="og_url" content="{{Request::url()}}" />
+<meta property="og:title" content="{{$data['meta']['name']}}"/>
+<meta property="og:site_name" content="Confessing In Network" />
+<meta property="og:url" content="{{Request::url()}}" />
+<meta property="og:type" content="website" />
 @stop
 
 @section('header_link')

@@ -7,10 +7,12 @@ Confessing In {{$data['meta']['name']}}@stop
 {{$data['meta']['fbappid']}}@stop
 
 @section('meta_og_tags')
-<meta property="og_title" content="{{$data['meta']['name']}} ID: {{$data['single']['confessionid']}}"/>
-<meta property="og_site_name" content="Confessing In Network" />
-<meta property="og_description" content="{{$data['single']['fbText']}}" />
-<meta property="og_url" content="{{Request::url()}}" />
+<meta property="og:title" content="{{$data['meta']['name']}} ID: {{$data['single']['confessionid']}}"/>
+<meta property="og:site_name" content="Confessing In Network" />
+<meta property="og:description" content="{{$data['single']['fbText']}}" />
+<meta property="og:url" content="{{Request::url()}}" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="{{date(c, strtotime($data['single']['approveddate']));}}" />
 @stop
 
 @section('header_link')
