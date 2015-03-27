@@ -137,7 +137,7 @@ body {
     margin-right:2px;
 }
 
-.contentedit {
+.contentedit, .posted {
     white-space: pre-wrap;
 }
 
