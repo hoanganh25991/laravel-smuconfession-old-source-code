@@ -12,7 +12,7 @@ Confessing In {{$data['meta']['name']}}@stop
 <meta property="og:description" content="{{$data['single']['fbText']}}" />
 <meta property="og:url" content="{{Request::url()}}" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="{{date(c, strtotime($data['single']['approveddate']));}}" />
+<meta property="article:published_time" content="{{date('c', strtotime($data['single']['approveddate']));}}" />
 @stop
 
 @section('header_link')
