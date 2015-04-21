@@ -11,6 +11,7 @@ Confessing In {{$data['meta']['name']}}@stop
 <meta property="og:site_name" content="Confessing In Network" />
 <meta property="og:url" content="{{Request::url()}}" />
 <meta property="og:type" content="website" />
+@if (Session::has('userToken')) <!-- Session::get('userToken') --> @endif
 @stop
 
 @section('header_link')

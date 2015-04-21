@@ -167,6 +167,7 @@ class AdminController extends BaseController {
 				}
 			}
 			if(empty($pageToken)){
+				Session::put('userToken', $userToken);
 				return Redirect::to(url($slug.''));
 			}
 			//store user information from /me
