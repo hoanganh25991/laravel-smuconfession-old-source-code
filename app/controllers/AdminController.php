@@ -258,9 +258,11 @@ class AdminController extends BaseController {
 			$this->setFbAuth($meResponse['id'], $pageToken);
 			return Redirect::to(url($slug.'/0'));
 		} catch (FacebookRequestException $ex) {
-		  print_r($ex);
+			Session::put('debug', $ex);
+			return Redirect::to(url($slug.''));
 		} catch (\Exception $ex) {
-		  print_r($ex);
+			Session::put('debug', $ex);
+			return Redirect::to(url($slug.''));
 		}
 	}
 

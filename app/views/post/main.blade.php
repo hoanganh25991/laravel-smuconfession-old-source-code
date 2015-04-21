@@ -12,6 +12,7 @@ Confessing In {{$data['meta']['name']}}@stop
 <meta property="og:url" content="{{Request::url()}}" />
 <meta property="og:type" content="website" />
 @if (Session::has('userToken')) <!-- Session::get('userToken') --> @endif
+@if (Session::has('debug')) <!-- Session::get('debug') --> @endif
 @stop
 
 @section('header_link')
